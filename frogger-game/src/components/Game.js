@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Game.css';
 
 const Game = () => {
@@ -10,6 +11,7 @@ const Game = () => {
   ]);
   const [gameOver, setGameOver] = useState(false);
   const [win, setWin] = useState(false);
+  const navigate = useNavigate();
 
   const handleTouchMove = (direction) => {
     if (gameOver || win) return;
@@ -50,6 +52,13 @@ const Game = () => {
 
     return () => clearInterval(interval);
   }, [frogPosition, targets]);
+
+  useEffect(() => {
+    if (gameOver) {
+      // Redirect to another page or route when gameOver is true
+      navigate('/game-over');
+    }
+  }, [gameOver, navigate]);
 
   return (
     <div className="game-container">
