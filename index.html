@@ -1,212 +1,115 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html lang = "en-US">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Frogger Game</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #121212;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    canvas {
-      background-color: #000;
-      border: 4px solid #fff;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-      position: relative; /* Add relative positioning */
-      z-index: 1; /* Set a higher z-index */
-    }
-    .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      z-index: 10;
-      pointer-events: none;
-    }
-    .overlay h1 {
-      font-size: 2em;
-      margin-bottom: 20px;
-    }
-    .button {
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: #fff;
-      border: 2px solid #fff;
-      border-radius: 10px;
-      cursor: pointer;
-      margin: 10px;
-      font-size: 16px;
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: all 0.3s ease;
-      pointer-events: auto; /* Enable pointer events */
-  }
-
-    .button:hover {
-      background-color: #fff;
-      color: #007bff;
-    }
-  </style>
+    <meta charset = "UTF-8">
+    <title>Frogger</title>
+    <link rel = "stylesheet" type = "text/css" href = "styles/game.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/images/favicon/site.webmanifest">
 </head>
-<body>
-  <canvas id="gameCanvas" width="800" height="600"></canvas>
-  <div class="overlay" id="startScreen">
-    <h1>Try to Even Vote</h1>
-    <button class="button" id="startButton">Start Game</button>
-    <button class="button" id="whyButton">Why Did We Make This?</button>
-  </div>
-  <div class="overlay" id="whyScreen" style="display: none;">
-    <h1>Why Did We Make This?</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi.</p>
-    <button class="button" id="backButton">Back to Start</button>
-  </div>
-  <script>
-    const canvas = document.getElementById("gameCanvas");
-    const ctx = canvas.getContext("2d");
+<body id = "body" onload = "MyGame.game.initialize();">
+    <div id = "game">
+        <div id = "main-menu" class = "screen">
+            <img src="assets/images/logo.png" alt="Frogger Logo" id="logo">
+            <ul class = "menu">
+                <li><button id = "id-new-game">New&nbsp;Game</button></li>
+                <li><button id = "id-high-scores">High&nbsp;Scores</button></li>
+                <li><button id = "id-controls">Controls</button></li>
+                <li><button id = "id-about">Credits</button></li>
+            </ul>
+        </div>
+        <div id = "game-play" class = "screen">
+            <canvas id = "id-canvas"></canvas>
+        </div>
+        <div id = "high-scores" class = "screen">
+            <h1>High Scores</h1>
+            <ol id = "scores"></ol>
+            <ul class = "menu">
+                <li><button id = "id-high-scores-back">Back</button></li>
+            </ul>
+        </div>
+        <div id = "controls" class = "screen">
+            <h1>Modify Controls</h1>
+            <div class="control-div">
+                <p>Up</p>
+                <button id = "up-button" class="controls-button"></button>
+            </div>
+            <div class="control-div">
+                <p>Down</p>
+                <button id = "down-button" class="controls-button"></button>
+            </div>
+            <div class="control-div">
+                <p>Left</p>
+                <button id = "left-button" class="controls-button"></button>
+            </div>
+            <div class="control-div">
+                <p>Right</p>
+                <button id = "right-button" class="controls-button"></button>
+            </div>
+            <div class="control-div">
+                <p>Quit Game</p>
+                <button class="controls-button">Esc</button>
+            </div>
+            <ul class = "menu">
+                <li><button id = "id-controls-back">Back</button></li>
+            </ul>
+        </div>
+        <div id = "about" class = "screen">
+            <h1>Credits</h1>
+            <p>Refactored by</p>
+            <p>Loopdash, LLC</p>
+            <p>Initally Developed by</p>
+            <p>Carter McGee</p>
+            <ul class = "menu">
+                <li><button id = "id-about-back">Back</button></li>
+            </ul>
+        </div>
+    </div>
 
-    const cellSize = 50;
-    const rows = 10;
-    const cols = 16;
-    const carSpeed = 2;
-    const personSpeed = 5;
-
-    let personX = canvas.width / 2;
-    let personY = canvas.height - cellSize;
-    let cars = [];
-
-    function startGame() {
-      document.getElementById('startScreen').style.display = 'none';
-      document.getElementById('whyScreen').style.display = 'none';
-      generateCars();
-      draw();
-    }
-
-    function showWhy() {
-      document.getElementById('startScreen').style.display = 'none';
-      document.getElementById('whyScreen').style.display = 'flex';
-    }
-
-    function hideWhy() {
-      document.getElementById('startScreen').style.display = 'flex';
-      document.getElementById('whyScreen').style.display = 'none';
-    }
-
-    function generateCars() {
-      for (let i = 0; i < 3; i++) {
-        const car = {
-          x: Math.random() * canvas.width,
-          y: (i + 1) * (canvas.height / 4), // Adjusted y-position
-          width: cellSize * 1.5,
-          height: cellSize / 2,
-          color: getRandomColor(),
-          speed: Math.random() < 0.5 ? carSpeed : -carSpeed
+    <script>
+        let MyGame = {
+            screens : {},
+            input: {},
+            objects: {},
+            render: [],
+            bindings: {},
+            systems: {},
+            highscores: {},
+            sounds: {},
         };
-        cars.push(car);
-      }
-    }
+    </script>
+    <script src = "scripts/audio.js"></script>
+    <script src = "scripts/random.js"></script>
+    <script src = "scripts/persistence.js"></script>
+    <script src = "scripts/systems/particle-system.js"></script>
+    <script src = "scripts/systems/traffic-system.js"></script>
+    <script src = "scripts/systems/log-system.js"></script>
+    <script src = "scripts/systems/turtle-system.js"></script>
+    <script src = "scripts/objects/frogger.js"></script>
+    <script src = "scripts/objects/text.js"></script>
+    <script src = "scripts/objects/homes.js"></script>
+    <script src = "scripts/render/core.js"></script>
+    <script src = "scripts/render/frogger.js"></script>
+    <script src = "scripts/render/text.js"></script>
+    <script src = "scripts/render/particle-system.js"></script>
+    <script src = "scripts/render/traffic-system.js"></script>
+    <script src = "scripts/render/log-system.js"></script>
+    <script src = "scripts/render/turtle-system.js"></script>
+    <script src = "scripts/render/animated-model.js"></script>
+    <script src = "scripts/render/homes.js"></script>
+    <script src = "scripts/input-keyboard.js"></script>
+    <script src = "scripts/input-mouse.js"></script>
+    <script src = "scripts/creators.js"></script>
+    <script src = "scripts/ai.js"></script>
 
-    function drawPerson() {
-      ctx.fillStyle = "#00ff00";
-      ctx.fillRect(personX, personY, cellSize, cellSize);
-    }
+    <script src = "scripts/game.js"></script>
+    <script src = "scripts/mainmenu.js"></script>
+    <script src = "scripts/gameplay.js"></script>
+    <script src = "scripts/highscores.js"></script>
+    <script src = "scripts/controls.js"></script>
+    <script src = "scripts/about.js"></script>
 
-    function drawCars() {
-      cars.forEach(car => {
-        ctx.fillStyle = car.color;
-        ctx.fillRect(car.x, car.y, car.width, car.height);
-      });
-    }
-
-    function moveCars() {
-      cars.forEach(car => {
-        car.x += car.speed;
-        if (car.x + car.width < 0 || car.x > canvas.width) {
-          car.x = car.speed > 0 ? -car.width : canvas.width;
-          car.color = getRandomColor();
-        }
-      });
-    }
-
-    function getRandomColor() {
-      const letters = "0123456789ABCDEF";
-      let color = "#";
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
-    }
-
-    function checkCollision() {
-      cars.forEach(car => {
-        if (
-          personX < car.x + car.width &&
-          personX + cellSize > car.x &&
-          personY < car.y + car.height &&
-          personY + cellSize > car.y
-        ) {
-          endGame();
-        }
-      });
-    }
-
-    function endGame() {
-      document.getElementById('startScreen').style.display = 'flex';
-      document.getElementById('startScreen').innerHTML = '<h1>You did not vote :(</h1><button class="button" id="retryButton">Retry</button>';
-      cars = [];
-      personX = canvas.width / 2;
-      personY = canvas.height - cellSize;
-    }
-
-    function clearCanvas() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-
-    function draw() {
-      clearCanvas();
-      drawPerson();
-      drawCars();
-      moveCars();
-      checkCollision();
-      requestAnimationFrame(draw);
-    }
-
-    document.addEventListener("keydown", function(event) {
-      switch (event.key) {
-        case "ArrowUp":
-          personY -= personSpeed;
-          break;
-        case "ArrowDown":
-          personY += personSpeed;
-          break;
-        case "ArrowLeft":
-          personX -= personSpeed;
-          break;
-        case "ArrowRight":
-          personX += personSpeed;
-          break;
-      }
-    });
-
-    document.getElementById('startButton').addEventListener('click', startGame);
-    document.getElementById('whyButton').addEventListener('click', showWhy);
-    document.getElementById('backButton').addEventListener('click', hideWhy);
-    document.getElementById('retryButton').addEventListener('click', startGame);
-  </script>
 </body>
 </html>
