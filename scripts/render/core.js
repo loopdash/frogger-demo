@@ -9,21 +9,28 @@ MyGame.graphics = (function() {
     flowerbed.onload = function() {
         flowerbedReady = true;
     };
-    flowerbed.src = 'assets/images/flowers.png';
+    flowerbed.src = 'assets/images/brick.png';
+
+    let landingReady = false;
+    let landing = new Image();
+    landing.onload = function() {
+        landingReady = true;
+    };
+    landing.src = 'assets/images/landing.png';
 
     let waterReady = false;
     let water = new Image();
     water.onload = function() {
         waterReady = true;
     };
-    water.src = 'assets/images/water.png';
+    water.src = 'assets/images/gray.png';
 
     let roadReady = false;
     let road = new Image();
     road.onload = function() {
         roadReady = true;
     };
-    road.src = 'assets/images/road.png';
+    road.src = 'assets/images/beige.png';
 
     let goalReady = false;
     let goal = new Image();
@@ -37,7 +44,7 @@ MyGame.graphics = (function() {
     life.onload = function() {
         lifeReady = true;
     };
-    life.src = 'assets/images/life.png';
+    life.src = 'assets/images/player-sm.png';
 
 
     function clear() {
@@ -74,7 +81,7 @@ MyGame.graphics = (function() {
         }
 
         // draw the flowers
-        if(flowerbedReady){
+        if(flowerbedReady && landingReady){
             // rest area
             context.drawImage(
                 flowerbed,
@@ -85,7 +92,7 @@ MyGame.graphics = (function() {
             );
             // beginning
             context.drawImage(
-                flowerbed,
+                landing,
                 0,
                 tileSize*13,
                 canvas.width,

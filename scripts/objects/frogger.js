@@ -16,14 +16,14 @@ MyGame.objects.Frogger = function(spec) {
     idle.onload = function() {
         idleReady = true;
     };
-    idle.src = 'assets/images/frogger-idle.png';
+    idle.src = 'assets/images/player.png';
 
     let jumpReady = false;
     let jump = new Image();
     jump.onload = function() {
         jumpReady = true;
     };
-    jump.src = 'assets/images/frogger-jump.png';
+    jump.src = 'assets/images/player.png';
 
 
     function currentImage(){

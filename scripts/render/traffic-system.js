@@ -42,6 +42,7 @@ MyGame.render.TrafficSystem = function(system, graphics, imageSrc) {
     }
 
 
+
     let api = {
         render: render,
     };

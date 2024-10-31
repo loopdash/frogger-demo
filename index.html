@@ -4,21 +4,26 @@
     <meta charset = "UTF-8">
     <title>Frogger</title>
     <link rel = "stylesheet" type = "text/css" href = "styles/game.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/ffavicon.png">
     <link rel="manifest" href="assets/images/favicon/site.webmanifest">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
 </head>
 <body id = "body" onload = "MyGame.game.initialize();">
     <div id = "game">
         <div id = "main-menu" class = "screen">
-            <img src="assets/images/logo.png" alt="Frogger Logo" id="logo">
+            <!-- <img src="assets/images/logo.png" alt="Frogger Logo" id="logo"> -->
+            <p>Now that the election results are in, it’s time to certify the results. Avoid the bad actors on your way to the Capitol.</p>
             <ul class = "menu">
                 <li><button id = "id-new-game">New&nbsp;Game</button></li>
                 <li><button id = "id-high-scores">High&nbsp;Scores</button></li>
                 <li><button id = "id-controls">Controls</button></li>
                 <li><button id = "id-about">Credits</button></li>
             </ul>
+            <p>Courage For America</p>
+
         </div>
         <div id = "game-play" class = "screen">
             <canvas id = "id-canvas"></canvas>
@@ -57,11 +62,10 @@
             </ul>
         </div>
         <div id = "about" class = "screen">
-            <h1>Credits</h1>
-            <p>Refactored by</p>
-            <p>Loopdash, LLC</p>
-            <p>Initally Developed by</p>
-            <p>Carter McGee</p>
+            <h2 class="center text-size">Credits</h2>
+            <img src="./assets/images/logo.png" alt="Courage for America Logo" id="logo">
+            <p>We’re calling on all members of Congress to do their jobs and peacefully certify the election results.</p>
+
             <ul class = "menu">
                 <li><button id = "id-about-back">Back</button></li>
             </ul>
