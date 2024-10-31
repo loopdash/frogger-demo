@@ -161,6 +161,9 @@ MyGame.graphics = (function() {
 
 
     function drawText(spec, background=false) {
+        const paddingX = 10; // Horizontal padding
+        const paddingY = 5;  // Vertical padding
+
         context.save();
 
         context.font = spec.font;
@@ -168,10 +171,22 @@ MyGame.graphics = (function() {
 
         if(background){
             context.beginPath();
-            let width = context.measureText(spec.text).width;
-            context.fillStyle = "black";
-            context.strokeStyle = "black";
-            context.rect(spec.position.x, spec.position.y, width, canvas.height / 10);
+
+            let width = context.measureText(spec.text).width + 2 * paddingX;
+
+            let fontSize = parseInt(spec.font.match(/\d+/), 10);
+            let height = fontSize + 6 * paddingY; 
+    
+            context.fillStyle = "#170B83";
+            context.strokeStyle = "#170B83";
+    
+            context.rect(
+                spec.position.x - paddingX,   
+                spec.position.y - paddingY,   
+                width,
+                height
+            );
+    
             context.fill();
             context.stroke();
         }

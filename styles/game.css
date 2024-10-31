@@ -59,10 +59,28 @@ ul.menu {
     list-style: none;
 }
 
+.padding-x {
+    padding-top: 1em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}
+
+.padding-smaller {
+    padding-top: 26.365px !important;
+
+}
 ul.menu li {
     margin: 0.8em 0;
 }
 
+.font-smaller {
+    font-size: 0.8em !important;
+}
+
+.font-smallest {
+    font-size: 0.5em !important;
+  
+}
 ul.menu li button {
     font-family: 'Press Start 2P';
     font-size: 1em;

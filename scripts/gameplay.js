@@ -462,10 +462,10 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
         // create a corresponding traffic renderer for each lane of traffic
         trafficRenderers = [
             renderer.TrafficSystem(trafficSystems[0], graphics, 'assets/images/microphone.png'),
-            renderer.TrafficSystem(trafficSystems[1], graphics, 'assets/images/Misinformation-red-blue.png'),
+            renderer.TrafficSystem(trafficSystems[1], graphics, 'assets/images/double-blue-speech.png'),
             renderer.TrafficSystem(trafficSystems[2], graphics, 'assets/images/microphone.png'),
             renderer.TrafficSystem(trafficSystems[3], graphics, 'assets/images/Misinformation-orange-yellow.png'),
-            renderer.TrafficSystem(trafficSystems[4], graphics, 'assets/images/Repub-elephant.png'),
+            renderer.TrafficSystem(trafficSystems[4], graphics, 'assets/images/speech-elephant.png'),
         ];
 
         // create water systems for each level of water
@@ -473,9 +473,9 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
 
         // create a corresponding waterSystems renderer for each level of water
         waterRenderers = [
-            renderer.LogSystem(waterSystems[0], graphics, 'assets/images/microphone.png', 'assets/images/microphone.png'),
-            renderer.LogSystem(waterSystems[1], graphics, 'assets/images/Repub-elephant.png', 'assets/images/Repub-elephant.png'),
-            renderer.LogSystem(waterSystems[2], graphics, 'assets/images/qshaman.png', 'assets/images/qshaman.png'),
+            renderer.LogSystem(waterSystems[0], graphics, 'assets/images/man-mic-elephant.png', 'assets/images/man-mic-elephant.png'),
+            renderer.LogSystem(waterSystems[1], graphics, 'assets/images/seven-group.png', 'assets/images/seven-group.png'),
+            renderer.LogSystem(waterSystems[2], graphics, 'assets/images/mic-elephant-man-q.png', 'assets/images/mic-elephant-man-q.png'),
             renderer.TurtleSystem(waterSystems[3], graphics, 'assets/images/congressman.png'),
             renderer.TurtleSystem(waterSystems[4], graphics, 'assets/images/qshaman.png'),
         ];
@@ -520,18 +520,18 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
 
         winText = objects.Text({
             text: "YOU WIN!",
-            font: graphics.canvas.width / 322 + 'em arcade',
-            fillStyle: 'rgb(150, 0, 150)',
-            strokeStyle: 'rgb(150, 0, 150)',
-            position: { x: graphics.canvas.width / 3.3 , y: gridHeight*6.75}
+            font: graphics.canvas.width / 800 + 'em "Press Start 2P"',
+            fillStyle: 'white',
+            strokeStyle: '#170B83',
+            position: { x: graphics.canvas.width / 3.3 , y: gridHeight*7.75}
         });
 
         loseText = objects.Text({
             text: "GAME OVER",
-            font: graphics.canvas.width / 322 + 'em arcade',
-            fillStyle: 'rgb(150, 0, 150)',
-            strokeStyle: 'rgb(150, 0, 150)',
-            position: { x: graphics.canvas.width / 3.6, y: gridHeight*6.75}
+            font: graphics.canvas.width / 800 + 'em "Press Start 2P"',
+            fillStyle: 'white',
+            strokeStyle: '#170B83',
+            position: { x: graphics.canvas.width / 3.6, y: gridHeight*7.75}
         });
 
         // hide the cursor
