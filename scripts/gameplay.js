@@ -484,7 +484,7 @@ function triggerWin() {
             renderer.TrafficSystem(trafficSystems[0], graphics, 'assets/images/microphone.png'),
             renderer.TrafficSystem(trafficSystems[1], graphics, 'assets/images/double-blue-speech.png'),
             renderer.TrafficSystem(trafficSystems[2], graphics, 'assets/images/microphone.png'),
-            renderer.TrafficSystem(trafficSystems[3], graphics, 'assets/images/Misinformation-orange-yellow.png'),
+            renderer.TrafficSystem(trafficSystems[3], graphics, 'assets/images/yellow-speech-and-mic.png'),
             renderer.TrafficSystem(trafficSystems[4], graphics, 'assets/images/speech-elephant.png'),
         ];
 
@@ -493,10 +493,10 @@ function triggerWin() {
 
         // create a corresponding waterSystems renderer for each level of water
         waterRenderers = [
-            renderer.LogSystem(waterSystems[0], graphics, 'assets/images/man-mic-elephant.png', 'assets/images/man-mic-elephant.png'),
+            renderer.LogSystem(waterSystems[0], graphics, 'assets/images/mic-elephant-man-q.png', 'assets/images/mic-elephant-man-q.png'),
             renderer.LogSystem(waterSystems[1], graphics, 'assets/images/seven-group.png', 'assets/images/seven-group.png'),
             renderer.LogSystem(waterSystems[2], graphics, 'assets/images/mic-elephant-man-q.png', 'assets/images/mic-elephant-man-q.png'),
-            renderer.TurtleSystem(waterSystems[3], graphics, 'assets/images/congressman.png'),
+            renderer.TurtleSystem(waterSystems[3], graphics, 'assets/images/double-congressman.png'),
             renderer.TurtleSystem(waterSystems[4], graphics, 'assets/images/qshaman.png'),
         ];
 
