@@ -210,7 +210,7 @@ MyGame.graphics = (function() {
         context.save();
         context.beginPath();
         context.lineWidth = loc.height / 7;
-        context.strokeStyle = "white";
+        context.strokeStyle = "#1D824C";
         context.rect(loc.tl_x, loc.tl_y, loc.width, loc.height);
         context.stroke();
 

@@ -22,7 +22,7 @@
 
 body {
     background-color: rgba(30, 130, 76, 1);
-    background-image: url("/assets/images/background.png");
+    background-image: url("../assets/images/background.png");
     font-family: 'Press Start 2P';
     padding-top: 25px;
 }
