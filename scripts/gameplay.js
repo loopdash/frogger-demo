@@ -138,6 +138,12 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
             bufferSize: frogger.size.width / 4 
         };
 
+            // Check if Frogger reaches the goal area (goal.png) directly
+    if (isInGoalArea(froggerPos)) {
+        triggerWin();
+        return; // Stop further checks since the player won
+    }
+
         for(let i = 0; i < 5; i++){
             // check for traffic collisions
             trafficCollision = trafficSystems[i].detectCollision(froggerPos);
@@ -193,6 +199,22 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
         }
     }
 
+    // Utility function to detect if Frogger is in the goal area
+function isInGoalArea(froggerPos) {
+    // Assuming goal.png has specific coordinates; replace with actual coordinates
+    const goalTopY = 0; // Top boundary for goal area
+    const goalBottomY = gridHeight; // Bottom boundary for goal area
+    return froggerPos.y >= goalTopY && froggerPos.y <= goalBottomY;
+}
+
+// Trigger the win condition
+function triggerWin() {
+    score += 1000; // Add bonus points if desired
+    scoreText.updateText(score);
+    justWon = true;
+    waitTime = WIN_WAIT_TIME;
+    playSound('win'); // Play win sound if you have one
+}
 
     function processInput(elapsedTime) {
         aiWaitTime -= elapsedTime;
