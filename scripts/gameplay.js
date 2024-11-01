@@ -149,14 +149,12 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
             // check for log/turtle/alligator collisions
             waterCollision = waterSystems[i].detectCollision(froggerPos);
             
-            if(waterCollision.sameLevel){
-                if(waterCollision.onLog || waterCollision.onTurtle){
-                    frogger.changeSpeed(waterCollision.newSpeed);
-                }else if(waterCollision.eaten){
-                    handleDeath("eaten");
-                } else{
-                    handleDeath("drowned");
+            if (waterCollision.sameLevel) {
+                // Treat logs and turtles as unsafe
+                if (waterCollision.onLog || waterCollision.onTurtle) {
+                    handleDeath("traffic"); // or use "drowned" if preferred for effect
                 }
+                // Water is safe, so no need to handle "drowned" if off-log or off-turtle
             }
         }
 
