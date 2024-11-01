@@ -16,39 +16,73 @@ MyGame.objects.Frogger = function(spec) {
     idle.onload = function() {
         idleReady = true;
     };
-    idle.src = 'assets/images/frogger-idle.png';
+    idle.src = 'assets/images/player.png';
 
-    let jumpReady = false;
-    let jump = new Image();
-    jump.onload = function() {
-        jumpReady = true;
+    // let jumpReady = false;
+    // let jump = new Image();
+    // jump.onload = function() {
+    //     jumpReady = true;
+    // };
+    // jump.src = 'assets/images/frogger-jump.png';
+
+    let playerLeftReady = false;
+    let playerLeft = new Image();
+    playerLeft.onload = function() {
+        playerLeftReady = true;
     };
-    jump.src = 'assets/images/frogger-jump.png';
-
-
+    playerLeft.src = 'assets/images/player-left.png';
+    
+    let playerRightReady = false;
+    let playerRight = new Image();
+    playerRight.onload = function() {
+        playerRightReady = true;
+    };
+    playerRight.src = 'assets/images/player-right.png';
+    
+    let direction = "idle"; // Track direction state
+    
     function currentImage(){
-        if(jumping){
-            return jump;
-        } else{
+        if (direction === "left") {
+            return playerLeft;
+        } else if (direction === "right") {
+            return playerRight;
+        } else {
             return idle;
         }
     }
-
+    
     function currentImageReady(){
-        if(jumping){
-            return jumpReady;
-        } else{
+        if (direction === "left") {
+            return playerLeftReady;
+        } else if (direction === "right") {
+            return playerRightReady;
+        } else {
             return idleReady;
         }
     }
-
+    function updateImage(newDirection) {
+        switch(newDirection){
+            case "up":
+            case "down":
+                // Set direction to idle if moving up or down
+                direction = "idle";
+                break;
+            case "left":
+                direction = "left";
+                break;
+            case "right":
+                direction = "right";
+                break;
+        }
+    }
+    
     function updateRotation(direction) {
         switch(direction){
             case "up":
                 rotation = 0;
                 break;
             case "down":
-                rotation = pi;
+                rotation = 0;
                 break;
             case "left":
                 rotation = (3*pi) / 2;
@@ -61,7 +95,7 @@ MyGame.objects.Frogger = function(spec) {
 
     function moveUp() {
         if(!jumping){
-            updateRotation("up");
+            updateImage("up");
             moveTo({
                 x: spec.center.x,
                 y: spec.center.y - spec.size.height,
@@ -71,7 +105,7 @@ MyGame.objects.Frogger = function(spec) {
 
     function moveDown() {
         if(!jumping){
-            updateRotation("down");
+            updateImage("down");
             moveTo({
                 x: spec.center.x,
                 y: spec.center.y + spec.size.height,
@@ -81,7 +115,7 @@ MyGame.objects.Frogger = function(spec) {
 
     function moveLeft() {
         if(!jumping){
-            updateRotation("left");
+            updateImage("left");
             moveTo({
                 x: spec.center.x - spec.size.width,
                 y: spec.center.y,
@@ -91,7 +125,7 @@ MyGame.objects.Frogger = function(spec) {
 
     function moveRight() {
         if(!jumping){
-            updateRotation("right");
+            updateImage("right");
             moveTo({
                 x: spec.center.x + spec.size.width,
                 y: spec.center.y,
@@ -173,12 +207,12 @@ MyGame.objects.Frogger = function(spec) {
             x: spec.canvasSize.width / 2, 
             y: spec.canvasSize.height - spec.size.height / 2
         }, false);
-        updateRotation("up");
+        updateImage("up");
         stopJumping();
     }
 
     let api = {
-        updateRotation: updateRotation,
+        updateImage: updateImage,
         moveLeft: moveLeft,
         moveRight: moveRight,
         moveUp: moveUp,

@@ -138,6 +138,12 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
             bufferSize: frogger.size.width / 4 
         };
 
+            // Check if Frogger reaches the goal area (goal.png) directly
+    if (isInGoalArea(froggerPos)) {
+        triggerWin();
+        return; // Stop further checks since the player won
+    }
+
         for(let i = 0; i < 5; i++){
             // check for traffic collisions
             trafficCollision = trafficSystems[i].detectCollision(froggerPos);
@@ -149,14 +155,12 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
             // check for log/turtle/alligator collisions
             waterCollision = waterSystems[i].detectCollision(froggerPos);
             
-            if(waterCollision.sameLevel){
-                if(waterCollision.onLog || waterCollision.onTurtle){
-                    frogger.changeSpeed(waterCollision.newSpeed);
-                }else if(waterCollision.eaten){
-                    handleDeath("eaten");
-                } else{
-                    handleDeath("drowned");
+            if (waterCollision.sameLevel) {
+                // Treat logs and turtles as unsafe
+                if (waterCollision.onLog || waterCollision.onTurtle) {
+                    handleDeath("traffic"); // or use "drowned" if preferred for effect
                 }
+                // Water is safe, so no need to handle "drowned" if off-log or off-turtle
             }
         }
 
@@ -195,6 +199,22 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
         }
     }
 
+    // Utility function to detect if Frogger is in the goal area
+function isInGoalArea(froggerPos) {
+    // Assuming goal.png has specific coordinates; replace with actual coordinates
+    const goalTopY = 0; // Top boundary for goal area
+    const goalBottomY = gridHeight; // Bottom boundary for goal area
+    return froggerPos.y >= goalTopY && froggerPos.y <= goalBottomY;
+}
+
+// Trigger the win condition
+function triggerWin() {
+    score += 1000; // Add bonus points if desired
+    scoreText.updateText(score);
+    justWon = true;
+    waitTime = WIN_WAIT_TIME;
+    playSound('win'); // Play win sound if you have one
+}
 
     function processInput(elapsedTime) {
         aiWaitTime -= elapsedTime;
@@ -318,6 +338,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
             }
         }
     }
+
 
     function render() {
         graphics.clear();
@@ -460,11 +481,11 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
 
         // create a corresponding traffic renderer for each lane of traffic
         trafficRenderers = [
-            renderer.TrafficSystem(trafficSystems[0], graphics, 'assets/images/car.png'),
-            renderer.TrafficSystem(trafficSystems[1], graphics, 'assets/images/truck.png'),
-            renderer.TrafficSystem(trafficSystems[2], graphics, 'assets/images/fast-car.png'),
-            renderer.TrafficSystem(trafficSystems[3], graphics, 'assets/images/truck.png'),
-            renderer.TrafficSystem(trafficSystems[4], graphics, 'assets/images/racecars.png'),
+            renderer.TrafficSystem(trafficSystems[0], graphics, 'assets/images/microphone.png'),
+            renderer.TrafficSystem(trafficSystems[1], graphics, 'assets/images/double-blue-speech.png'),
+            renderer.TrafficSystem(trafficSystems[2], graphics, 'assets/images/microphone.png'),
+            renderer.TrafficSystem(trafficSystems[3], graphics, 'assets/images/Misinformation-orange-yellow.png'),
+            renderer.TrafficSystem(trafficSystems[4], graphics, 'assets/images/speech-elephant.png'),
         ];
 
         // create water systems for each level of water
@@ -472,11 +493,11 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
 
         // create a corresponding waterSystems renderer for each level of water
         waterRenderers = [
-            renderer.LogSystem(waterSystems[0], graphics, 'assets/images/log-medium.png', 'assets/images/alligator.png'),
-            renderer.LogSystem(waterSystems[1], graphics, 'assets/images/log-large.png', 'assets/images/alligator.png'),
-            renderer.LogSystem(waterSystems[2], graphics, 'assets/images/log-small.png', 'assets/images/alligator.png'),
-            renderer.TurtleSystem(waterSystems[3], graphics, 'assets/images/turtle.png'),
-            renderer.TurtleSystem(waterSystems[4], graphics, 'assets/images/turtle.png'),
+            renderer.LogSystem(waterSystems[0], graphics, 'assets/images/man-mic-elephant.png', 'assets/images/man-mic-elephant.png'),
+            renderer.LogSystem(waterSystems[1], graphics, 'assets/images/seven-group.png', 'assets/images/seven-group.png'),
+            renderer.LogSystem(waterSystems[2], graphics, 'assets/images/mic-elephant-man-q.png', 'assets/images/mic-elephant-man-q.png'),
+            renderer.TurtleSystem(waterSystems[3], graphics, 'assets/images/congressman.png'),
+            renderer.TurtleSystem(waterSystems[4], graphics, 'assets/images/qshaman.png'),
         ];
 
 
@@ -489,18 +510,18 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
 
         scoreText = objects.Text({
             text: "SCORE:" + ('00000'+ score).slice(-5),
-            font: graphics.canvas.width / 495.3 + 'em arcade',
-            fillStyle: 'rgba(255, 255, 255, 1)',
+            font: graphics.canvas.width / 1200 + 'em "Press Start 2P"',
+            fillStyle: 'black',
             strokeStyle: 'rgba(0, 0, 0, 1)',
-            position: { x: gridWidth*3.5 , y: 0}
+            position: { x: gridWidth*3.5 , y: gridHeight * 0.3}
         });
 
         timeText = objects.Text({
             text: "TIME",
-            font: graphics.canvas.width / 644 + 'em arcade',
-            fillStyle: 'rgba(255, 255, 255, 1)',
+            font: graphics.canvas.width / 1400 + 'em "Press Start 2P"',
+            fillStyle: 'black',
             strokeStyle: 'rgba(0, 0, 0, 1)',
-            position: { x: graphics.canvas.width * .78 , y: -gridHeight / 7}
+            position: { x: graphics.canvas.width * .78 , y: gridHeight * 0.05}
         });
 
         deathReady = false;
@@ -508,29 +529,29 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
         deathImage.onload = function() {
             deathReady = true;
         };
-        deathImage.src = 'assets/images/death.png';
+        deathImage.src = 'assets/images/gameover.png';
 
         attractImageReady = false;
         attractModeLogo = new Image();
         attractModeLogo.onload = function() {
             attractImageReady = true;
         };
-        attractModeLogo.src = 'assets/images/attract-mode.png';
+        attractModeLogo.src = 'assets/images/title.png';
 
         winText = objects.Text({
             text: "YOU WIN!",
-            font: graphics.canvas.width / 322 + 'em arcade',
-            fillStyle: 'rgb(150, 0, 150)',
-            strokeStyle: 'rgb(150, 0, 150)',
-            position: { x: graphics.canvas.width / 3.3 , y: gridHeight*6.75}
+            font: graphics.canvas.width / 800 + 'em "Press Start 2P"',
+            fillStyle: 'white',
+            strokeStyle: '#170B83',
+            position: { x: graphics.canvas.width / 3.3 , y: gridHeight*7.75}
         });
 
         loseText = objects.Text({
             text: "GAME OVER",
-            font: graphics.canvas.width / 322 + 'em arcade',
-            fillStyle: 'rgb(150, 0, 150)',
-            strokeStyle: 'rgb(150, 0, 150)',
-            position: { x: graphics.canvas.width / 3.6, y: gridHeight*6.75}
+            font: graphics.canvas.width / 800 + 'em "Press Start 2P"',
+            fillStyle: 'white',
+            strokeStyle: '#170B83',
+            position: { x: graphics.canvas.width / 3.6, y: gridHeight*7.75}
         });
 
         // hide the cursor

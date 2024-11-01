@@ -19,7 +19,7 @@ MyGame.objects.Homes = function(spec) {
     frogHomeImage.onload = function() {
         frogHomeReady = true;
     };
-    frogHomeImage.src = 'assets/images/frogger-home.png';
+    frogHomeImage.src = 'assets/images/player.png';
 
     let flyReady = false;
     let flyImage = new Image();
