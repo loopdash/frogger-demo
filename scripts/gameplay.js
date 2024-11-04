@@ -603,12 +603,8 @@ function triggerWin() {
         // Stop the game loop by canceling the request for the next animation frame
         cancelNextRequest = true;
 
-        // Then, return to the share
-        if (!attractMode) {
-            game.showScreen('high-scores');
-        }
-
-        game.showScreen('main-menu');
+        // Redirects to main menu & Refreshes local storage as well.
+        location.reload();
 
     }
 
