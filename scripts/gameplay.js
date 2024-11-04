@@ -184,11 +184,7 @@ MyGame.screens['game-play'] = (function(game, objects, renderer, graphics, input
                 flyPointsTime = 1000;
             }
             handleFrogHome(homeCollision.homeCenter);
-        } else if(homeCollision.eaten){
-            handleDeath("eaten");
-        } else if(homeCollision.sameLevel){
-            handleDeath("bushes");
-        }
+        } 
     }
 
     function updateObstacles(elapsedTime){
