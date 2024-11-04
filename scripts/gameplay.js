@@ -454,7 +454,7 @@ function triggerWin() {
         score = 0;
         jumpsBack = 0;
         timeLeft = 30000;
-        livesLeft = 1;
+        livesLeft = 5;
         waitTime = 0;
         level = 1;
         aiWaitTime = 300;
