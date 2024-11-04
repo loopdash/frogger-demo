@@ -10,6 +10,7 @@
     <link rel="manifest" href="assets/images/favicon/site.webmanifest">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
+    
 </head>
 <body id = "body" onload = "MyGame.game.initialize();">
     <div id = "game">
@@ -18,7 +19,7 @@
             <p class="padding-x">Now that the election results are in, it’s time to certify the results. Avoid the bad actors on your way to the Capitol.</p>
             <ul class="menu padding-smaller">
                 <li><button id = "id-new-game">New&nbsp;Game</button></li>
-                <li><button id = "id-high-scores">High&nbsp;Scores</button></li>
+                <li><button id = "id-high-scores">Share Score</button></li>
                 <li><button id = "id-controls">Controls</button></li>
                 <li><button id = "id-about">Credits</button></li>
             </ul>
@@ -29,8 +30,12 @@
             <canvas id = "id-canvas"></canvas>
         </div>
         <div id = "high-scores" class = "screen">
-            <h1>High Scores</h1>
+            <h1 id="high-score-header">High Score</h1>
             <ol id = "scores"></ol>
+            <div class="social-buttons">
+                <button id="twitter-share" class="score-button">Share on Twitter</button>
+                <button id="facebook-share" class="score-button">Share on Facebook</button>
+            </div>
             <ul class = "menu">
                 <li><button id = "id-high-scores-back">Back</button></li>
             </ul>

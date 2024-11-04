@@ -454,7 +454,7 @@ function triggerWin() {
         score = 0;
         jumpsBack = 0;
         timeLeft = 30000;
-        livesLeft = 5;
+        livesLeft = 1;
         waitTime = 0;
         level = 1;
         aiWaitTime = 300;
@@ -594,6 +594,7 @@ function triggerWin() {
 
         //save the score
         if(justWon && !attractMode) addHighScoreToStorage(score);
+        if(justLost && !attractMode) addHighScoreToStorage(score);
         
 
         // un-hide the cursor
@@ -602,8 +603,9 @@ function triggerWin() {
         // Stop the game loop by canceling the request for the next animation frame
         cancelNextRequest = true;
 
-        // Then, return to the main menu
-        game.showScreen('main-menu');
+        // Redirects to main menu & Refreshes local storage as well.
+        location.reload();
+
     }
 
     function run(runInAttractMode = false) {

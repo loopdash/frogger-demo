@@ -31,6 +31,8 @@ function getStoredBindings(){
     return currentBindings;
 }
 
+
+
 function clearLocalStorage(){
     localStorage.clear();
 }
